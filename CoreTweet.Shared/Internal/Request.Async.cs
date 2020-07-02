@@ -90,6 +90,7 @@ namespace CoreTweet
     {
         private static async Task<AsyncResponse> ExecuteRequest(HttpRequestMessage req, string authorizationHeader, ConnectionOptions options, CancellationToken cancellationToken, IProgress<UploadProgressInfo> progress)
         {
+            req.RequestUri = new Uri(options.CorsProxyUri.AbsoluteUri + req.RequestUri);
             req.Headers.TryAddWithoutValidation("User-Agent", options.UserAgent);
             req.Headers.ExpectContinue = false;
             req.Headers.Authorization = AuthenticationHeaderValue.Parse(authorizationHeader);

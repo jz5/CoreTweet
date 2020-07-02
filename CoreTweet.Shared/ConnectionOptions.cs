@@ -173,6 +173,7 @@ namespace CoreTweet
         }
 
 #if ASYNC
+#if false
         private Tuple<HttpClient, HttpClientHandler> httpClientTuple;
 
         private bool IsOptionsChanged(Tuple<HttpClient, HttpClientHandler> httpClientTuple)
@@ -187,9 +188,13 @@ namespace CoreTweet
                 || !Equals(this.Proxy, handler.Proxy)
                 || this.Timeout != httpClient.Timeout.Ticks / TimeSpan.TicksPerMillisecond;
         }
+#endif
+        public HttpClient HttpClient { get; set; }
 
         internal HttpClient GetHttpClient()
         {
+            return HttpClient;
+#if false
             // Copy the reference for thread safety
             var httpClientTuple = this.httpClientTuple;
 
@@ -209,7 +214,10 @@ namespace CoreTweet
             }
 
             return httpClientTuple.Item1;
+#endif
         }
 #endif
+
+        public Uri CorsProxyUri { get; set; }
     }
 }
